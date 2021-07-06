@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>默认效果</title>
+<link rel="stylesheet" href="css/liMarquee.css">
+<link rel="stylesheet" href="css/jquery.autoscroll.css">
+<style>
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+.jq22 { width: 500px; margin: 150px auto; font-size: 14px; border: 1px #5495f6 solid; height: 50px;}
+.jq22 a { margin: 0 15px; color: #333; text-decoration: none; border: 1px #f6851e solid;}
+.jq22 a:hover { text-decoration: underline;}
+
+	.btn {
+		padding: 20px 30px;
+		background: #f6851e;
+		color: #fff;
+		margin-right: 20px;
+		margin-bottom: 20px;
+		width: 120px;
+	}
+</style>
+</head>
+
+<body>
+
+<div class="btn" data-flag="update">update</div>
+<div class="btn" data-flag="destroy">destroy</div>
+<div class="btn" data-flag="pause">pause</div>
+<div class="btn" data-flag="play">play</div>
+
+<div class="jq22 auto-scroll">
+	<div class="auto-scroll-wapper">
+		<a href="#">0000000000000000000000000000</a>
+		<a href="#">1111111111111111111111111111</a>
+		<a href="#">2222222222222222222222222222</a>
+		<a href="#">3333333333333333333333333333</a>
+	</div>
+</div>
+
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery.autoscroll.js"></script>
+<script>
+$(function(){
+	let autoScroll = $('.jq22').autoScroll({
+		'direction': 'left',
+		speed: 0.5,
+		runshort: false,
+		hoverstop: false,
+	});
+	console.log('autoScroll: ', autoScroll)
+
+	$('.btn').on('click', function () {
+		let flag = $(this).data('flag')
+		autoScroll[flag] && autoScroll[flag]()
+	})
+});
+</script>
+
+</body>
+</html>
