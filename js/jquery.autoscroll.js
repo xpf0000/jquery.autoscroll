@@ -13,39 +13,37 @@
             let enterEvent = 'mouseenter'
             let leaveEvent = 'mouseleave'
             let
-                container = $(this),
+                container = $(this).addClass(`auto-scroll-${p.direction}`),
                 strWrap = $(this)
                     .children('.auto-scroll-wapper')
                     .data({speed:p.speed})
-                    .addClass(`auto-scroll-${p.direction}`)
+
+            const bounds = strWrap[0].getBoundingClientRect()
+            console.log('bounds: ', bounds, strWrap.outerWidth(true), strWrap.outerHeight(true))
 
             const code = function () {
 
                 strWrap.off('enterEvent');
                 strWrap.off('leaveEvent');
-                strWrap.find('.autoScroll-clone').remove()
+                container.find('.autoScroll-clone').remove()
                 strWrap.data('currentMove', null)
 
                 let wapperValue = 0, innerValue = 0
                 if (p.direction === 'left' || p.direction === 'right') {
                     wapperValue = container.width()
-                    strWrap.children().each(function () {
-                        innerValue += $(this).outerWidth(true)
-                    })
+                    innerValue = strWrap.outerWidth(true)
                 } else {
                     wapperValue = container.height()
-                    strWrap.children().each(function () {
-                        innerValue += $(this).outerHeight(true)
-                    })
+                    innerValue = strWrap.outerHeight(true)
                 }
+
                 if (wapperValue >= innerValue && !p.runshort) {
                     return
                 }
+                let clone
                 if (wapperValue < innerValue) {
-                    strWrap.children().each(function () {
-                        let clone = $(this).clone(false).addClass('autoScroll-clone')
-                        strWrap.append(clone)
-                    })
+                    clone = strWrap.clone(false).addClass('autoScroll-clone')
+                    container.append(clone)
                 }
                 const move = () => {
                     strWrap.timer && cancelAnimationFrame(strWrap.timer)
@@ -81,6 +79,9 @@
                     strWrap.css({
                         transform: transform
                     })
+                    clone && clone.css({
+                        transform: transform
+                    })
                     strWrap.timer = requestAnimationFrame(move)
                 }
                 strWrap.move = move
@@ -107,7 +108,7 @@
                 strWrap.timer = null
                 strWrap.off(enterEvent);
                 strWrap.off(leaveEvent);
-                strWrap.find('.autoScroll-clone').remove()
+                container.find('.autoScroll-clone').remove()
                 strWrap.data('currentMove', null)
                 strWrap.css({
                     transform: ''

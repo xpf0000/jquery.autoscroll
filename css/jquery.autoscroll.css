@@ -1,15 +1,11 @@
 .auto-scroll {
     overflow: hidden;
     white-space: nowrap;
+    display: flex;
 }
 .auto-scroll-wapper {
-    display: flex;
-    flex-wrap: nowrap;
-    white-space: nowrap;
-}
-.auto-scroll-wapper >* {
     flex-shrink: 0;
 }
-.auto-scroll-wapper.auto-scroll-up, .auto-scroll-wapper.auto-scroll-down {
+.auto-scroll-up, .auto-scroll-down {
     flex-direction: column;
 }
