@@ -96,20 +96,13 @@
                         container.off('mousemove').off('mouseup')
                     })
                 }
+                strWrap.isDestroy = false
             }
             code()
             const update = function () {
-                if (!strWrap) {
-                    console.warn('autoScroll object has destroyed')
-                    return
-                }
                 code()
             }
             const destroy = function () {
-                if (!strWrap) {
-                    console.warn('autoScroll object has destroyed')
-                    return
-                }
                 strWrap.timer && cancelAnimationFrame(strWrap.timer)
                 strWrap.timer = null
                 strWrap.off(enterEvent);
@@ -119,11 +112,10 @@
                 strWrap.css({
                     transform: ''
                 })
-                strWrap.removeData()
-                strWrap = null
+                strWrap.isDestroy = true
             }
             const pause = function () {
-                if (!strWrap) {
+                if (strWrap.isDestroy) {
                     console.warn('autoScroll object has destroyed')
                     return
                 }
@@ -132,7 +124,7 @@
                 strWrap.isPause = true
             }
             const play = function () {
-                if (!strWrap) {
+                if (strWrap.isDestroy) {
                     console.warn('autoScroll object has destroyed')
                     return
                 }
